@@ -60,11 +60,16 @@
                         .mozGetUserMedia;
 
                     getUserMedia({
-                        video: true
+                        video: true,
+                        audio: true
                     }, function (mediaStream) {
-
+                        me.$refs.currentUserVideoRef.srcObject = mediaStream;
+                        me.$refs.currentUserVideoRef.play();
                         call.answer(mediaStream);
-
+                        call.on('stream', function (remoteStream) {
+                            me.$refs.remoteVideoRef.srcObject = remoteStream;
+                            me.$refs.remoteVideoRef.play();
+                        });
                     }, function (err) {
                         console.log('Failed to get local stream', err);
                     });
@@ -79,7 +84,8 @@
                         .mozGetUserMedia;
 
                     getUserMedia({
-                        video: true
+                        video: true,
+                        audio: true
                     }, function (mediaStream) {
                         me.$refs.currentUserVideoRef.srcObject = mediaStream;
                         me.$refs.currentUserVideoRef.play();
